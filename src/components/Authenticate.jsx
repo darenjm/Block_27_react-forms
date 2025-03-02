@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function Authenticate({ token }) {
   const [successMessage, setSuccessMessage] = useState(null);
-  const [error, setError] = useState(null); //talk about this
+  const [error, setError] = useState(null); 
 
   async function handleClick() {
     console.log("Button clicked!");
@@ -11,7 +11,7 @@ export default function Authenticate({ token }) {
       const response = await fetch(
         "https://fsa-jwt-practice.herokuapp.com/authenticate",
         {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -19,9 +19,10 @@ export default function Authenticate({ token }) {
         }
       );
       const result = await response.json();
-      setSuccessMessage(result.message);
+      setSuccessMessage(result.message + ` ${result.data.username} `);
+      console.log(result)
     } catch (error) {
-      setError(error.message); //what is message, where does it get it's value?
+      setError(error.message);
     }
   }
 
